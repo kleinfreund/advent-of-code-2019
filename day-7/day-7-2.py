@@ -131,14 +131,14 @@ def process_intcode(program: Dict, input_values: List[int] = []) -> Tuple[bool, 
         elif opcode == OPCODE_JUMP_IF_TRUE:
             param_2_value = jump_if(intcode, pointer, param_0, operator.ne)
 
-            if param_2_value:
+            if param_2_value is not None:
                 program['pointer'] = param_2_value
             else:
                 program['pointer'] += 3
         elif opcode == OPCODE_JUMP_IF_FALSE:
             param_2_value = jump_if(intcode, pointer, param_0, operator.eq)
 
-            if param_2_value:
+            if param_2_value is not None:
                 program['pointer'] = param_2_value
             else:
                 program['pointer'] += 3
