@@ -7,20 +7,24 @@ test_orbit_data = [
 ]
 
 
-def read_orbit_data() -> List[str]:
+def read_file(filename) -> str:
     """
     Reads a text file called “orbit-data.txt”
     and returns a list of strings representing direct orbit relationships.
     """
     import os
-    dir_path = os.path.dirname(os.path.realpath(__file__)) + '/orbit-data.txt'
-    orbit_data = ''
+    dir_path = os.path.dirname(os.path.realpath(__file__)) + '/' + filename
+    file_content = ''
 
     with open(dir_path, 'r') as file:
-        orbit_data = file.read()
+        file_content = file.read()
         file.close()
 
-    return orbit_data.strip().split('\n')
+    return file_content.strip()
+
+
+def read_orbit_data(filename) -> List[int]:
+    return read_file(filename).split('\n')
 
 
 def build_orbit_map(orbit_data):
@@ -84,7 +88,7 @@ def find_common_object(orbit_path_1, orbit_path_2):
 
 
 def main():
-    orbit_data = read_orbit_data()
+    orbit_data = read_orbit_data('orbit-data.txt')
     # orbit_data = test_orbit_data
     shortest_route_length = find_shortest_route_length(
         orbit_data, 'SAN', 'YOU')

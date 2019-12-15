@@ -19,21 +19,24 @@ MODE_IMMEDIATE = '1'
 MODE_POSITION = '0'
 
 
-def read_intcode_program() -> List[int]:
+def read_file(filename) -> str:
     """
     Reads a text file called “orbit-data.txt”
     and returns a list of strings representing direct orbit relationships.
     """
     import os
-    dir_path = os.path.dirname(os.path.realpath(
-        __file__)) + '/intcode-program.txt'
-    orbit_data = ''
+    dir_path = os.path.dirname(os.path.realpath(__file__)) + '/' + filename
+    file_content = ''
 
     with open(dir_path, 'r') as file:
-        orbit_data = file.read()
+        file_content = file.read()
         file.close()
 
-    return list(map(int, orbit_data.strip().split(',')))
+    return file_content.strip()
+
+
+def read_intcode_program(filename) -> List[int]:
+    return list(map(int, read_file(filename).split(',')))
 
 
 def read(intcode: List[int], index: int, param_mode: str) -> int:
@@ -231,7 +234,7 @@ def find_max_thruster_signal(intcode: List[int]) -> int:
 
 
 def main():
-    intcode = read_intcode_program()
+    intcode = read_intcode_program('intcode-program.txt')
     max_thruster_signal = find_max_thruster_signal(intcode)
     print(max_thruster_signal)
 
